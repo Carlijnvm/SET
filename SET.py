@@ -1,3 +1,5 @@
+import random
+
 class Card:
     def __init__(self,symbol,number,color,shading):
         self.symbol=symbol
@@ -25,7 +27,12 @@ class Deck:
                     for shadings in range(3):
                         card=Card(symbols,numbers,colors,shadings)
                         self.cards.append(card)
+    
+    def shuffle(self):
+        random.shuffle(self.cards)
 
+
+    
 def check_if_set(card1,card2,card3):
     symbol_check = all_same_or_all_diff(card1.symbol,card2.symbol,card3.symbol)
     number_check = all_same_or_all_diff(card1.number,card2.number,card3.number)
@@ -77,6 +84,7 @@ def find_one_set (cards2):
                 if check_if_set(cardone, cardtwo, cardthree):
                     return (cardone,cardtwo,cardthree)
 
+
 #voorbeelden
 cards = [
     Card(0, 0, 0, 0), Card(1, 0, 1, 1), Card(2, 1, 2, 2),
@@ -94,8 +102,12 @@ cards2 = [
 
 valid_sets = find_all_sets(cards)
 for card_set in valid_sets:
-    print([str(card) for card in card_set])
+   print([str(card) for card in card_set])
 
 valid_set = find_one_set (cards2)
+
 for card_set in valid_set:
     print([str(card) for card in card_set])
+
+
+
