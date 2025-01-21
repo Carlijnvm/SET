@@ -16,6 +16,15 @@ class Card:
     colors=["red","green","purple"]
     shadings=["solid","striped","open"]
 
+class Deck:
+    def __init__(self):
+        self.cards = []
+        for symbols in range(3):
+            for numbers in range(3):
+                for colors in range(3):
+                    for shadings in range(3):
+                        card=Card(symbols,numbers,colors,shadings)
+                        self.cards.append(card)
 
 def check_if_set(card1,card2,card3):
     symbol_check = all_same_or_all_diff(card1.symbol,card2.symbol,card3.symbol)
@@ -58,6 +67,16 @@ def find_all_sets(cards):
                     sets.append((card1, card2, card3))  
     return sets
 
+def find_one_set (cards2):
+    for i in range(len(cards2)):
+        for j in range(i + 1, len(cards2)):
+            for k in range(j + 1, len(cards2)):
+                cardone = cards[i]
+                cardtwo = cards[j]
+                cardthree = cards[k]
+                if check_if_set(cardone, cardtwo, cardthree):
+                    return (cardone,cardtwo,cardthree)
+
 #voorbeelden
 cards = [
     Card(0, 0, 0, 0), Card(1, 0, 1, 1), Card(2, 1, 2, 2),
@@ -66,7 +85,15 @@ cards = [
     Card(0, 1, 2, 0), Card(1, 0, 1, 2), Card(2, 2, 1, 1)
 ]
 
-valid_sets = find_all_sets(cards)
+cards2 = [
+    Card(1, 2, 0, 0), Card(1, 0, 2, 1), Card(2, 1, 2, 2),
+    Card(0, 2, 1, 0), Card(1, 2, 2, 2), Card(2, 0, 2, 0),
+    Card(0, 0, 0, 2), Card(2, 1, 0, 0), Card(2, 2, 2, 1),
+    Card(0, 1, 2, 1), Card(0, 0, 1, 2), Card(2, 2, 1, 1)
+]
 
+valid_sets = find_all_sets(cards)
 for card_set in valid_sets:
     print([str(card) for card in card_set])
+
+valid_set = find_one_set (cards2)
