@@ -1,6 +1,7 @@
 import random
 
 print('hutsiefutsie')
+print(1)
 
 class Card:
     def __init__(self,symbol,number,color,shading):
