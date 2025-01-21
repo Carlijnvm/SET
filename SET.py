@@ -97,3 +97,5 @@ for card_set in valid_sets:
     print([str(card) for card in card_set])
 
 valid_set = find_one_set (cards2)
+for card_set in valid_set:
+    print([str(card) for card in card_set])
