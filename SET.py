@@ -1,5 +1,7 @@
 import random
-
+#ff wat veranderen
+print("huts")
+print('hutsa')
 class Card:
     def __init__(self,symbol,number,color,shading):
         self.symbol=symbol
