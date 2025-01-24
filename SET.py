@@ -14,8 +14,6 @@ class Card:
                            Card.symbols[self.symbol],
                            Card.shadings[self.shading],
                            Card.numbers[self.number])
-    
-    
 
     symbols=["diamond","squiggle","oval",]
     numbers=["1","2","3"]
@@ -145,13 +143,14 @@ beginkaarten = deck.starting_cards()
 for i in range(12):
     beginkaarten[i] = str(beginkaarten[i]).replace(", ", '')
 print(beginkaarten)
-
 #for i in range(12):
     #beginkaarten_str[i]= beginkaarten_str[i] + '.jpeg'
 #print((beginkaarten_str))
 
-
 screen = pygame.display.set_mode([610, 830])
+pygame.display.set_caption('SET')
+
+#twelve random starting cards
 image1 = pygame.image.load(str(beginkaarten[0])+'.jpeg')
 image2 = pygame.image.load(str(beginkaarten[1])+'.jpeg')
 image3 = pygame.image.load(str(beginkaarten[2])+'.jpeg')
@@ -164,33 +163,105 @@ image9 = pygame.image.load(str(beginkaarten[8])+'.jpeg')
 image10 = pygame.image.load(str(beginkaarten[9])+'.jpeg')
 image11 = pygame.image.load(str(beginkaarten[10])+'.jpeg')
 image12 = pygame.image.load(str(beginkaarten[11])+'.jpeg')
+
+#button class
+class Button():
+    def __init__(self, x, y, image): #x,y-coördinates for placement
+        self.image = image
+        self.rect = self.image.get_rect() #get rectangle from image
+        self.rect.topleft = (x, y) #where we want the image
+        self.clicked = False #starting value each button is not clicked
+
+    def draw(self):
+        action = False
+        #get mouse position
+        mouse_pos = pygame.mouse.get_pos()
+        
+        #check mouse over buttons and clicked conditions
+        if self.rect.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False: 
+                #0 for leftmost button
+                self.clicked = True
+                action = True
+
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
+
+        #draw button on screen
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
+
+#create button instances
+card1_button = Button(30, 100, image1)
+card2_button = Button(180, 100, image2)
+card3_button = Button(330, 100, image3)
+card4_button = Button(480, 100, image4)
+card5_button = Button(30, 350, image5)
+card6_button = Button(180, 350, image6)
+card7_button = Button(330, 350, image7)
+card8_button = Button(480, 350, image8)
+card9_button = Button(30, 600, image9)
+card10_button = Button(180, 600, image10)
+card11_button = Button(330, 600, image11)
+card12_button = Button(480, 600, image12)
+#andere 10 nog toevoegen
+
 running = True
 while running:
 
-    # Did the user click the window close button?
+    #achtergrondkleur
+    screen.fill((153, 204, 255))
+        
+    if card1_button.draw():
+        print('1')
+    if card2_button.draw():
+        print('2')
+    if card3_button.draw():
+        print('3')
+    if card4_button.draw():
+        print('4')
+    if card5_button.draw():
+        print('5')
+    if card6_button.draw():
+        print('6')
+    if card7_button.draw():
+        print('7')
+    if card8_button.draw():
+        print('8')
+    if card9_button.draw():
+        print('9')
+    if card10_button.draw():
+        print('10')
+    if card11_button.draw():
+        print('11')
+    if card12_button.draw():
+        print('12')
+
+    #12 startkaarten
+    #screen.blit(image1,(30,100))
+    #screen.blit(image2,(180,100))
+    #screen.blit(image3,(330,100))
+    #screen.blit(image4,(480,100))
+    #screen.blit(image5,(30,350))
+    #screen.blit(image6,(180,350))
+    #screen.blit(image7,(330,350))
+    #screen.blit(image8,(480,350))
+    #screen.blit(image9,(30,600))
+    #screen.blit(image10,(180,600))
+    #screen.blit(image11,(330,600))
+    #screen.blit(image12,(480,600))
+
+    #Did the user click the window close button?
     for event in pygame.event.get():
+        #quit game
         if event.type == pygame.QUIT:
             running = False
 
-    #achtergrondkleur
-    screen.fill((153, 204, 255))
-
-    screen.blit(image1,(30,100))
-    screen.blit(image2,(30,350))
-    screen.blit(image3,(30,600))
-    screen.blit(image4,(180,100))
-    screen.blit(image5,(180,350))
-    screen.blit(image6,(180,600))
-    screen.blit(image7,(330,100))
-    screen.blit(image8,(330,350))
-    screen.blit(image9,(330,600))
-    screen.blit(image10,(480,100))
-    screen.blit(image11,(480,350))
-    screen.blit(image12,(480,600))
+        pygame.display.update() #updates game window at each iteration 
  
-    
     # Flip the display
-    pygame.display.flip()
+    #pygame.display.flip()
 
 # Done! Time to quit.
 pygame.quit()
