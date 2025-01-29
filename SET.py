@@ -43,9 +43,10 @@ class Deck:
 
     
     def pop_card(self):
-        if len(self.cards) == 0:  
-            print("Deck is empty. Reshuffling the deck.")
-            self.shuffle()  #Reshuffle deck if empty
+        if len(self.cards) < 3:  
+            print("Not enough cards left in deck. Game is over.")
+            pygame.quit()
+            sys.exit()
         return self.cards.pop()  
 
     
@@ -121,7 +122,7 @@ def check_selected_set(clicked_cards, deck):
                 
             return new_cards
         else:
-            print("This is not a valid set.")
+            print("This is not a valid set Try again!")
         clicked_cards.clear()
     return None
         
@@ -209,7 +210,8 @@ button_list = [
 
 last_reset_time = time.time()
 
-clicked_cards = []  
+clicked_cards = []
+set_found = False  
 
 running = True
 while running:
@@ -219,47 +221,52 @@ while running:
     screen.blit(score_text, (30, 30))
 
     if time.time() - last_reset_time >= 20:
+        if not set_found:
+            random_cards = random.sample(cards_on_table, 3)
 
-        cards_on_table = deck.starting_cards()
-        #Update the images for the new cards
-        image1 = pygame.image.load(str(cards_on_table[0]) + '.jpeg')
-        image2 = pygame.image.load(str(cards_on_table[1]) + '.jpeg')
-        image3 = pygame.image.load(str(cards_on_table[2]) + '.jpeg')
-        image4 = pygame.image.load(str(cards_on_table[3]) + '.jpeg')
-        image5 = pygame.image.load(str(cards_on_table[4]) + '.jpeg')
-        image6 = pygame.image.load(str(cards_on_table[5]) + '.jpeg')
-        image7 = pygame.image.load(str(cards_on_table[6]) + '.jpeg')
-        image8 = pygame.image.load(str(cards_on_table[7]) + '.jpeg')
-        image9 = pygame.image.load(str(cards_on_table[8]) + '.jpeg')
-        image10 = pygame.image.load(str(cards_on_table[9]) + '.jpeg')
-        image11 = pygame.image.load(str(cards_on_table[10]) + '.jpeg')
-        image12 = pygame.image.load(str(cards_on_table[11]) + '.jpeg')
+            for card in random_cards:
+                cards_on_table.remove(card)
 
-        #Update the buttons for the new cards
-        card1_button = Button(30, 100, image1, cards_on_table[0])
-        card2_button = Button(180, 100, image2, cards_on_table[1])
-        card3_button = Button(330, 100, image3, cards_on_table[2])
-        card4_button = Button(480, 100, image4, cards_on_table[3])
-        card5_button = Button(30, 350, image5, cards_on_table[4])
-        card6_button = Button(180, 350, image6, cards_on_table[5])
-        card7_button = Button(330, 350, image7, cards_on_table[6])
-        card8_button = Button(480, 350, image8, cards_on_table[7])
-        card9_button = Button(30, 600, image9, cards_on_table[8])
-        card10_button = Button(180, 600, image10, cards_on_table[9])
-        card11_button = Button(330, 600, image11, cards_on_table[10])
-        card12_button = Button(480, 600, image12, cards_on_table[11])
+            new_cards = [deck.pop_card(), deck.pop_card(), deck.pop_card()]
+            cards_on_table.extend(new_cards)
 
-        #Update the button list
-        button_list = [
-            card1_button, card2_button, card3_button, card4_button,
-            card5_button, card6_button, card7_button, card8_button,
-            card9_button, card10_button, card11_button, card12_button
-        ]
+            #Update the images for the new cards
+            image1 = pygame.image.load(str(cards_on_table[0]) + '.jpeg')
+            image2 = pygame.image.load(str(cards_on_table[1]) + '.jpeg')
+            image3 = pygame.image.load(str(cards_on_table[2]) + '.jpeg')
+            image4 = pygame.image.load(str(cards_on_table[3]) + '.jpeg')
+            image5 = pygame.image.load(str(cards_on_table[4]) + '.jpeg')
+            image6 = pygame.image.load(str(cards_on_table[5]) + '.jpeg')
+            image7 = pygame.image.load(str(cards_on_table[6]) + '.jpeg')
+            image8 = pygame.image.load(str(cards_on_table[7]) + '.jpeg')
+            image9 = pygame.image.load(str(cards_on_table[8]) + '.jpeg')
+            image10 = pygame.image.load(str(cards_on_table[9]) + '.jpeg')
+            image11 = pygame.image.load(str(cards_on_table[10]) + '.jpeg')
+            image12 = pygame.image.load(str(cards_on_table[11]) + '.jpeg')
 
-        #Reset the timer
-        last_reset_time = time.time()
+            #Update the buttons for the new cards
+            card1_button = Button(30, 100, image1, cards_on_table[0])
+            card2_button = Button(180, 100, image2, cards_on_table[1])
+            card3_button = Button(330, 100, image3, cards_on_table[2])
+            card4_button = Button(480, 100, image4, cards_on_table[3])
+            card5_button = Button(30, 350, image5, cards_on_table[4])
+            card6_button = Button(180, 350, image6, cards_on_table[5])
+            card7_button = Button(330, 350, image7, cards_on_table[6])
+            card8_button = Button(480, 350, image8, cards_on_table[7])
+            card9_button = Button(30, 600, image9, cards_on_table[8])
+            card10_button = Button(180, 600, image10, cards_on_table[9])
+            card11_button = Button(330, 600, image11, cards_on_table[10])
+            card12_button = Button(480, 600, image12, cards_on_table[11])
 
-    #
+            button_list = [
+                card1_button, card2_button, card3_button, card4_button,
+                card5_button, card6_button, card7_button, card8_button,
+                card9_button, card10_button, card11_button, card12_button
+            ]
+            last_reset_time = time.time()
+            set_found = False
+
+    
     for button in button_list:
         if button.draw():
             clicked_cards.append(button.card)  #
@@ -267,8 +274,47 @@ while running:
                 new_cards = check_selected_set(clicked_cards, deck)
                 if new_cards:
                     score += score_increment
-                    cards_on_table = [card for card in cards_on_table if card not in clicked_cards] + new_cards 
+
+                    cards_on_table = [card for card in cards_on_table if card not in clicked_cards]
+                    cards_on_table.extend(new_cards) 
+
+                    #Updated cards on table
+                    image1 = pygame.image.load(str(cards_on_table[0]) + '.jpeg')
+                    image2 = pygame.image.load(str(cards_on_table[1]) + '.jpeg')
+                    image3 = pygame.image.load(str(cards_on_table[2]) + '.jpeg')
+                    image4 = pygame.image.load(str(cards_on_table[3]) + '.jpeg')
+                    image5 = pygame.image.load(str(cards_on_table[4]) + '.jpeg')
+                    image6 = pygame.image.load(str(cards_on_table[5]) + '.jpeg')
+                    image7 = pygame.image.load(str(cards_on_table[6]) + '.jpeg')
+                    image8 = pygame.image.load(str(cards_on_table[7]) + '.jpeg')
+                    image9 = pygame.image.load(str(cards_on_table[8]) + '.jpeg')
+                    image10 = pygame.image.load(str(cards_on_table[9]) + '.jpeg')
+                    image11 = pygame.image.load(str(cards_on_table[10]) + '.jpeg')
+                    image12 = pygame.image.load(str(cards_on_table[11]) + '.jpeg')
+
+                    #Updated buttons for the new cards
+                    card1_button = Button(30, 100, image1, cards_on_table[0])
+                    card2_button = Button(180, 100, image2, cards_on_table[1])
+                    card3_button = Button(330, 100, image3, cards_on_table[2])
+                    card4_button = Button(480, 100, image4, cards_on_table[3])
+                    card5_button = Button(30, 350, image5, cards_on_table[4])
+                    card6_button = Button(180, 350, image6, cards_on_table[5])
+                    card7_button = Button(330, 350, image7, cards_on_table[6])
+                    card8_button = Button(480, 350, image8, cards_on_table[7])
+                    card9_button = Button(30, 600, image9, cards_on_table[8])
+                    card10_button = Button(180, 600, image10, cards_on_table[9])
+                    card11_button = Button(330, 600, image11, cards_on_table[10])
+                    card12_button = Button(480, 600, image12, cards_on_table[11])
+
+                    button_list = [
+                        card1_button, card2_button, card3_button, card4_button,
+                        card5_button, card6_button, card7_button, card8_button,
+                        card9_button, card10_button, card11_button, card12_button
+                    ]
+                    
                     clicked_cards.clear()
+                    last_reset_time = time.time() #Reset the timer
+                    set_found = True
 
     
     for event in pygame.event.get():
