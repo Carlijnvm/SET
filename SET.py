@@ -1,6 +1,8 @@
 import random
 import pygame
 import time
+import sys
+import os
 
 class Card:
     def __init__(self, symbol, number, color, shading):
@@ -109,13 +111,14 @@ def check_selected_set(clicked_cards, deck):
         if check_if_set(card1, card2, card3):
             print("This is a valid set!")
             #vervangen van de drie kaarten van de gevonden set
-            for card in [card1, card2, card3]:
-                deck.add_card(card)  #belangrijk dat ze teruggestopt worden, anders is het deck ineens leeg
+            
+            #for card in [card1, card2, card3]:
+                #deck.add_card(card)  #belangrijk dat ze teruggestopt worden, anders is het deck ineens leeg
             
             new_cards = []
             for _ in range(3):
                 new_cards.append(deck.pop_card())
-            
+                
             return new_cards
         else:
             print("This is not a valid set.")
@@ -155,29 +158,20 @@ def find_one_set (example_cards2):
 
 
 
-#valid_sets = find_all_sets(cards)
-#for card_set in valid_sets:
-  #print([str(card) for card in card_set])
-
-#valid_set = find_one_set(cards)
-#for card_set in valid_set:
-    #print([str(card) for card in card_set])
-
 pygame.init()
-#voorbeeld startkaarten printen
+
+pygame.font.init()
+score = 0
+score_increment = 1
+font = pygame.font.Font(None, 48)
+
 deck = Deck()
 cards_on_table = deck.starting_cards()
-#print(beginkaarten)
-#beginkaarten_str = str(beginkaarten).replace(", ", '')
-#for i in range(12):
-    #cards_on_table[i] = str(cards_on_table[i]).replace(", ", '')
-#print(cards_on_table)
-#for i in range(12):
-    #beginkaarten_str[i]= beginkaarten_str[i] + '.jpeg'
-#print((beginkaarten_str))
-
 screen = pygame.display.set_mode([610, 830])
 pygame.display.set_caption('SET')
+
+
+
 
 #12 random starting cards
 image1 = pygame.image.load(str(cards_on_table[0]) + '.jpeg')
@@ -221,10 +215,12 @@ running = True
 while running:
     screen.fill((153, 204, 255)) 
 
-    if time.time() - last_reset_time >= 20:
-        
-        cards_on_table = deck.starting_cards()
+    score_text = font.render(f'Score: {score}', True, (0, 80, 255))
+    screen.blit(score_text, (30, 30))
 
+    if time.time() - last_reset_time >= 20:
+
+        cards_on_table = deck.starting_cards()
         #Update the images for the new cards
         image1 = pygame.image.load(str(cards_on_table[0]) + '.jpeg')
         image2 = pygame.image.load(str(cards_on_table[1]) + '.jpeg')
@@ -270,7 +266,8 @@ while running:
             if len(clicked_cards) == 3:  
                 new_cards = check_selected_set(clicked_cards, deck)
                 if new_cards:
-                    cards_on_table = [card for card in cards_on_table if card not in clicked_cards] + new_cards
+                    score += score_increment
+                    cards_on_table = [card for card in cards_on_table if card not in clicked_cards] + new_cards 
                     clicked_cards.clear()
 
     
