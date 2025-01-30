@@ -68,7 +68,7 @@ class Game: #added Game class, restructured code into Game class
         self.timer_duration = 30  #changed form 20 to 30, was too fast:)
 
 
-    def same_or_diff(feature1, feature2, feature3): #moved this function before def chef if set
+    def same_or_diff(feature1, feature2, feature3): #moved this function before def check if set
         if feature1 == feature2 and feature2 == feature3:
             return True
         elif (feature1 != feature2) and (feature2 != feature3) and (feature1 != feature3):
@@ -185,7 +185,7 @@ class Game: #added Game class, restructured code into Game class
             x, y = positions[i] #gets the x,y-position from the list
             #HIGHLIGHTS SELECTED CARDS
             if i in self.selected_indices: #if the index of a card is in the list of selected indices
-                pygame.draw.rect(self.screen, (255, 255, 0), (x-5, y-5, 130, 190), 5) #draws yellow rectangle around selected cards
+                pygame.draw.rect(self.screen, (255, 255, 0), (x-5, y-5, 110, 210), 5) #draws yellow rectangle around selected cards
             
             
             if card is not None:
