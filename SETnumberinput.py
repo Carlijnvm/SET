@@ -50,6 +50,8 @@ class Deck:
             table.append(self.pop_card()) 
         return table
 
+
+
 #functies vergelijken kaarten en vinden sets
 def check_if_set(card1, card2, card3):
     symbol_check = same_or_diff(card1.symbol, card2.symbol, card3.symbol)
@@ -100,37 +102,31 @@ def draw_cards(cards):
         x, y = positions[i]
         if card is not None:
             try:
-                # Load card image dynamically
+                #Load card image dynamically
                 image = pygame.image.load(f"{str(card)}.jpeg")
                 screen.blit(image, (x, y))
             except FileNotFoundError:
-                # Draw placeholder rectangle if image is missing
+                #Draw placeholder rectangle if image is missing
                 pygame.draw.rect(screen, (255, 255, 255), (x, y, 100, 200))
                 pygame.draw.rect(screen, (0, 0, 0), (x, y, 100, 200), 2)
 
-            # Draw card number below the card
+            #Draw card number below the card
             card_number = font.render(str(i + 1), True, (0, 0, 0))
-            screen.blit(card_number, (x + 40, y + 210))  # Centered below the card
+            screen.blit(card_number, (x + 40, y + 210))  #Centered below the card
         else:
             pass 
 
 
 running = True
 while running:
-    screen.fill((153, 204, 255))  # Light blue background
+    screen.fill((153, 204, 255))  #Light blue background
 
-    # Draw score
+    #Draw score
     score_text = font.render(f'Score: {score}', True, (0, 80, 255))
     screen.blit(score_text, (20, 20))
 
-    # Draw cards
+    #Draw cards
     draw_cards(cards_on_table)
-
-    # Check if time to reset cards
-    if time.time() - last_reset_time >= 20:
-        print("Time's up! Resetting some cards...")
-        replace_cards(cards_on_table, random.sample(range(len(cards_on_table)), 3), deck)
-        last_reset_time = time.time()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -138,10 +134,15 @@ while running:
 
     pygame.display.flip()
 
-    # Terminal input for selecting cards
+    #Terminal input for selecting cards
     if running:
         print("Enter three card numbers seperated by a space to select a SET (example: '1 2 3'): ")
         try:
+            #Check if time to reset cards
+            if time.time() - last_reset_time >= 20:
+                print("Time's up! Resetting some cards...")
+                replace_cards(cards_on_table, random.sample(range(len(cards_on_table)), 3), deck)
+                last_reset_time = time.time()
             user_input = input()
             indices = [int(x) - 1 for x in user_input.split()]
             if len(indices) != 3:
