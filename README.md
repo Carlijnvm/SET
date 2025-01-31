@@ -1,10 +1,12 @@
 # SET
 This project can be used to play the card game SET. The game can be played entirely in the pygame window. In addition to this, different messages in the terminal will provide extra information for the user. It is important that pygame is installed on the device the code is running on. Tip: make sure the code is not on full screen mode so you can see the game window and the code at the same time, because useful messages will be shown in the terminal.
 
-How the game works
+**How the game works**
+
 The goal of the card game SET is to collect as many sets as possible. The deck includes 81 unique cards. Each card has four properties: number (1, 2, or 3), symbol (diamond, squiggle, or oval), color (red, green, or purple) and shading (filled, striped, or empty). To collect a set, you need to choose three cards that are either all the same or all different for each property. At the start of the game there are twelve cards on the table. When a player finds a set, he can take it and keep it. Three new cards from the deck are the laid on the table to replace the taken set. This continues until the deck is empty. If the situation where there are no sets on the table happens to occur, this collection of cards is called a Cap set, three cards are added. Our program works a little different. As explained the game starts with twelve cards on the table, but during the game this amount does not change. If no set is found after an established time (30 seconds in our case), the computer tries to find a set. If the computer finds a valid set, it gets a point, and those three cards get replaced with new cards from the deck. If the computer also couldn’t find a valid set, three random cards get replaced and no one gets a point. 
 
-How to use our code
+**How to use our code**
+
 After selecting Run Python file, the pygame window will pop up. You can start searching for a set in this window, where twelve cards are displayed, as well as your current score on the top left and the computers score on the top right. When you click on a card, a yellow border appears around the card, letting you know the card is selected. By clicking on a card again, the yellow border will disappear, and the card is deselected.
 
 As soon as you have selected three cards, the text in the terminal will tell if the set is valid or not. Supposing that the set is valid, the cards forming the set will be replaced with three new cards. The score in the pygame window will update each time you find a correct set. If the set is invalid, nothing changes in the pygame window display, but the terminal will have new text explaining this. You can keep searching for a set. 
