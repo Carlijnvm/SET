@@ -111,6 +111,20 @@ class Game: #added Game class, restructured code into Game class
         #the computer tries to find one and if it does, gets a point
         return None #much simpler than all the breaks and continues
 
+    def find_all_sets(self, cards): 
+        #added this function to the code again, with small changes, because of the new Game class
+        #we don't use it in our code anymore but in the assignment it was asked to write it
+        sets = []
+        for i in range(len(cards)):
+            for j in range(i + 1, len(cards)):
+                for k in range(j + 1, len(cards)):
+                    card1 = cards[i]
+                    card2 = cards[j]
+                    card3 = cards[k]
+                    if self.check_if_set(card1, card2, card3):
+                        sets.append((card1, card2, card3))  
+        return sets
+    
     def handle_click(self, pos): #gave clicking the cards another shot, reused some code
         positions = [
             (30, 100), (180, 100), (330, 100), (480, 100),  
